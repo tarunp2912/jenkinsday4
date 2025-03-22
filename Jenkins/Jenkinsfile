@@ -6,7 +6,6 @@ pipeline {
     environment  {
         SCANNER_HOME=tool 'sonar-scanner'
     }
-
     stages {
         stage('Cleaning Workspace') {
             steps {
@@ -24,7 +23,7 @@ pipeline {
                     withSonarQubeEnv('sonar-scanner') {
                         sh ''' $SCANNER_HOME/bin/sonar-scanner \
                         -Dsonar.projectName=docker-ci-project-2 \
-                        -Dsonar.projectKey=docker-ci-project-2'
+                        -Dsonar.projectKey=docker-ci-project-2 '''
                     }
                 }
             }
@@ -32,7 +31,7 @@ pipeline {
         stage('QualityGate') {
             steps {
                 script {
-                    waitForQualityGate abortPipeline: false, credentialsId: 'sonartoken' 
+                    waitForQualityGate abortPipeline: false, credentialsId: 'sonar-token' 
                 }
             }
         }
@@ -54,18 +53,25 @@ pipeline {
         stage("Image Create") {
             steps {
                 script{
-                    sh ' docker build -t dockercicd .'
+                    sh ' docker build -t dockerci .'
                 }
             }
         }
-
-        // Extra deploying code
-        
-        stage("CreateContainer"){
-            steps{
-                sh 'docker run -dit --name web -p 80:80 dockercicd /bin/bash'
-            }
-        }
-
+        // stage("ImagePush") {
+        //     steps {
+        //         script {
+        //             withCredentials([usernamePassword(credentialsId: 'docker-repo-creds', usernameVariable: 'docker_user', passwordVariable: 'docker_pass')]) {
+        //             sh "docker tag finexo ${env.docker_user}/finexo:${BUILD_NUMBER}"
+        //             sh "docker login -u ${env.docker_user} -p ${env.docker_pass}"
+        //             sh "docker push ${env.docker_user}/finexo:${BUILD_NUMBER}"
+        //             }
+        //         }
+        //     }
+        // }
+        // stage("ImageScan") {
+        //     steps {
+        //         sh 'trivy image prateekkumawat/finexo:${BUILD_NUMBER} > trivyimage_${BUILD_NUMBER}.txt' 
+        //     }
+        // }
     }
 }
