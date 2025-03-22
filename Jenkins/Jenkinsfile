@@ -23,8 +23,8 @@ pipeline {
                 dir('src/') {
                     withSonarQubeEnv('sonar-scanner') {
                         sh ''' $SCANNER_HOME/bin/sonar-scanner \
-                        -Dsonar.projectName=docker-ci-project \
-                        -Dsonar.projectKey=docker-ci-project '''
+                        -Dsonar.projectName=docker-ci-project-2 \
+                        -Dsonar.projectKey=docker-ci-project-2'
                     }
                 }
             }
@@ -32,7 +32,7 @@ pipeline {
         stage('QualityGate') {
             steps {
                 script {
-                    waitForQualityGate abortPipeline: false, credentialsId: 'sonar-token' 
+                    waitForQualityGate abortPipeline: false, credentialsId: 'sonartoken' 
                 }
             }
         }
