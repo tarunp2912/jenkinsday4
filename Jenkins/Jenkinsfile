@@ -60,26 +60,12 @@ pipeline {
         }
 
         // Extra deploying code
-        // stage("CreateContainer"){
-        //     steps{
-        //         sh 'docker run -dit --name web -p 80:80 dockercicd /bin/bash'
-        //     }
-        // }
-        // stage("ImagePush") {
-        //     steps {
-        //         script {
-        //             withCredentials([usernamePassword(credentialsId: 'docker-repo-creds', usernameVariable: 'docker_user', passwordVariable: 'docker_pass')]) {
-        //             sh "docker tag finexo ${env.docker_user}/finexo:${BUILD_NUMBER}"
-        //             sh "docker login -u ${env.docker_user} -p ${env.docker_pass}"
-        //             sh "docker push ${env.docker_user}/finexo:${BUILD_NUMBER}"
-        //             }
-        //         }
-        //     }
-        // }
-        // stage("ImageScan") {
-        //     steps {
-        //         sh 'trivy image prateekkumawat/finexo:${BUILD_NUMBER} > trivyimage_${BUILD_NUMBER}.txt' 
-        //     }
-        // }
+        
+        stage("CreateContainer"){
+            steps{
+                sh 'docker run -dit --name web -p 80:80 dockercicd /bin/bash'
+            }
+        }
+
     }
 }
