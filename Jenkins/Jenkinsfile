@@ -60,11 +60,11 @@ pipeline {
         }
 
         // Extra deploying code
-        stage("CreateContainer"){
-            steps{
-                sh 'docker run -dit --name web -p 80:80 dockercicd /bin/bash'
-            }
-        }
+        // stage("CreateContainer"){
+        //     steps{
+        //         sh 'docker run -dit --name web -p 80:80 dockercicd /bin/bash'
+        //     }
+        // }
         // stage("ImagePush") {
         //     steps {
         //         script {
