@@ -59,7 +59,7 @@ pipeline {
         }
         stage("BuildContainer"){
             steps {
-                sh 'docker run -dit --name web -p 80:80 dockerci /bin/bash'
+                sh 'docker run -dit --name web -p 82:80 dockerci:latest '
             }
         }
     }
