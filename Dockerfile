@@ -9,6 +9,3 @@ WORKDIR /usr/share/nginx/html/
 
 # Expose Your Port
 EXPOSE 80
-
-# Runnig in Forgroumd
-CMD ["nginx", "-g", "daemon off;"]
