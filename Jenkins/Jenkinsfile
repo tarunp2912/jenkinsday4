@@ -60,8 +60,6 @@ pipeline {
         stage("BuildContainer"){
             steps {
                 sh 'docker run -dit --name web -p 80:80 dockerci /bin/bash'
-                sh 'docker exec -it web bash'
-                sh '/usr/sbin/nginx'
             }
         }
     }
